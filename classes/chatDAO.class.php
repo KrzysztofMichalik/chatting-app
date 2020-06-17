@@ -140,7 +140,7 @@ class chatDAO
     }
   }
 
-  public function getMsg(? $last_id) 
+  public function getMsg( $last_id) 
   {
     try {
       curl_setopt($this->ch, CURLOPT_POSTFIELDS,
