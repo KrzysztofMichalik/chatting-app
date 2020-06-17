@@ -1,6 +1,5 @@
 <?php
-var_dump($_POST);
-var_dump($_GET);
+
 require_once('init.inc.php');
 require_once('inc/header.inc.php');
 require_once('inc/nav.inc.php');
@@ -26,8 +25,8 @@ if (!empty($_POST['convName']) ) {
 // ADD USER TO CONVERSATION
 if(isset($_POST['inviteBuddy'])) {
   $dao = new chatDAO("http://tank.iai-system.com/api/chat/join");
-  // $zwrotka = $dao->addBuddy($_POST['buddyName'], $_POST['chat-id']);
-  // var_dump($zwrotka);
+  $zwrotka = $dao->addBuddy($_POST['buddyName'], $_POST['invChat_id']);
+  var_dump($zwrotka);
 }
 // LEAVE CONVERSATION
 if(!empty($_POST['leave'])) {
@@ -73,7 +72,7 @@ function getActiveChat() {
                   <div class="chat_people">
                   <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                   <div class="chat_id">
-                  <h5>'. $value['name'] .'<span class="chat_date">chat id: ' ."\t" . $value['id'] .'</span></h5>
+                  <h5>'. $value['name'] .'</h5>
                   <div class="d-flex justify-content-between">
                   <div>
                   <button" class="trans-btn btn btn-success" data-chat-id="'.$value['id'].'" data-toggle="modal" data-target="#add_buddy">Add Buddy</button></div>                   
@@ -90,6 +89,8 @@ function getActiveChat() {
           }
            ?>
          </div>
+          <div>
+          </div>
         </div>
         <div class="mesgs">
           <div class="msg_history">
@@ -190,8 +191,6 @@ function getActiveChat() {
               </div>
             </div>
           </div>
-          <?php
-          var_dump($_GET)?>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <input type="submit" class="btn btn-primary" name="inviteBuddy" value="Enter"/>

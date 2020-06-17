@@ -83,6 +83,9 @@ img{ max-width:100%;}
   padding: 0 0 0 15px;
   width: 88%;
 }
+.chat_id {
+  margin-left: 20%;
+}
 
 .chat_people{ overflow:hidden; clear:both;}
 .chat_list {
