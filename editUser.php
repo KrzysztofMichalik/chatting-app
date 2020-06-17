@@ -3,8 +3,6 @@ require_once('init.inc.php');
 require_once('inc/header.inc.php');
 require_once('inc/nav.inc.php');
 
-
-$dao = new userDAO("http://tank.iai-system.com/api/user/edit");
 if (empty($_SESSION['name'])) {
   echo '<div class="container mt-5">'.
         '<div class="row justify-content-md-center">'.
@@ -13,6 +11,7 @@ if (empty($_SESSION['name'])) {
         '</div></div></div>';
   die;
 }
+$dao = new userDAO("http://tank.iai-system.com/api/user/edit");
 
 if (isset($_POST['submitChanges'])) {
   $returned_html = $dao->editUser($_POST);
@@ -32,7 +31,7 @@ if (isset($_POST['submitChanges'])) {
           <div class="col-md-12">
             <div class="form-group">
               <label for="newUserPass">New Password</label>
-                <input type="password" class="form-control" name="newUserPass"/>
+              <input type="password" class="form-control" name="newUserPass"/>
             </div>
           </div>
           <div class="col-md-12">

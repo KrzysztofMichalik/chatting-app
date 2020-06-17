@@ -1,8 +1,5 @@
 <?php
 
-/**
- *
- */
 class userDAO
 {
   private $ch;
@@ -28,7 +25,7 @@ class userDAO
       $this->outputArray = json_decode($this->output, true);
 
       if (is_array($this->outputArray)) {
-        var_dump($this->output);
+
         $html_result = '<div class="container">'.
                         '<div class="row justify-content-md-center">'.
                         '<div class="col-md-auto alert alert-success" role="alert">'.
@@ -37,7 +34,6 @@ class userDAO
         return $html_result;
 
       } else {
-        var_dump($this->output);
         $html_result = '<div class="container">'.
               '<div class="row justify-content-md-center">'.
               '<div class="col-md-auto alert alert-danger" role="alert">'.
@@ -119,7 +115,6 @@ class userDAO
 // pomyśl o przeniesieniu tej funkcji do innej klasy
   public function logIn(array $post)
   {
-    var_dump($post);
     if (!empty($post['name']) && !empty($post['pswd']) && empty($post['logOut'])) {
 
       try {
@@ -163,8 +158,6 @@ class userDAO
     }
   }
   public function logOut(){
-
-    echo 'co do chuja';
      $html_result ='<div class="container">'.
      '<div class="row justify-content-md-center">'.
      '<div class="col-md-auto mt-5 alert alert-danger" role="alert">'.
