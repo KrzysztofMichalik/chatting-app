@@ -113,7 +113,7 @@ class chatDAO
     }
   }
 
-  public function sentMsg($chat_id, $message)
+  public function sendMsg($chat_id, $message)
   {
     $chat_id = intval($chat_id);
     try {

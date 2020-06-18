@@ -1,3 +1,6 @@
+.convName {
+  cursor: pointer;
+}
 
 .note
 {
@@ -96,7 +99,9 @@ img{ max-width:100%;}
 .inbox_chat { height: 550px; overflow-y: scroll;}
 
 .active_chat{ background:#ebebeb;}
-
+.incoming_msg{
+  margin-bottom: 15px;
+}
 .incoming_msg_img {
   display: inline-block;
   width: 6%;
@@ -151,7 +156,13 @@ img{ max-width:100%;}
   width: 100%;
 }
 
-.type_msg {border-top: 1px solid #c4c4c4;position: relative;}
+.type_msg {
+  border-top: 1px solid #c4c4c4;
+  position: relative;
+  position: absolute;
+  width: 500px;
+  bottom: 27%;
+}
 .msg_send_btn {
   background: #05728f none repeat scroll 0 0;
   border: medium none;
@@ -165,8 +176,12 @@ img{ max-width:100%;}
   top: 11px;
   width: 33px;
 }
+
 .messaging { padding: 0 0 50px 0;}
 .msg_history {
   height: 516px;
   overflow-y: auto;
+}
+.sm-font{
+  font-size: 10px;
 }
