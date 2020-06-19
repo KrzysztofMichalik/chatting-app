@@ -7,8 +7,7 @@ if (isset($_COOKIES['my_session'])) {
   
 
 if (!empty($_POST["message"]) && !empty($_POST["chat_id"])) {
-    print 'cokolwiek';
-    
+
 
     $chat_id = $_POST["chat_id"];
 
@@ -42,21 +41,24 @@ if (!empty($_POST["message"]) && !empty($_POST["chat_id"])) {
     curl_multi_add_handle($mh,$ch1);
     curl_multi_add_handle($mh,$ch2);
     
-    $index=null;
     do {
-      curl_multi_exec($mh,$index);
-    } while($index > 0);
+        $status = curl_multi_exec($mh, $active);
+        if ($active) {
+            curl_multi_select($mh);
+        }
+    } while ($active && $status == CURLM_OK);
     
-    $resultSend = curl_multi_getcontent($ch2);
+    $resultSend = curl_multi_exec($ch2);
     $resultSend = json_decode($resultSend, true);
-    $resultGet = curl_multi_getcontent($ch1);
+    $resultGet = curl_multi_exec($ch1);
     $resultGet = json_decode($resultGet, true);
 
   
     
     // var_dump($resultGet);
     if(is_array($resultGet) && is_array($resultSend) ){
-        foreach ($resultGet['list'] as $key => $value) {
+        $result = array_reverse($resultGet['list']); 
+        foreach ($result as $key => $value) {
             // var_dump($value);
             if($value["chat_id"] == $chat_id ){        
                 // var_dump($value);

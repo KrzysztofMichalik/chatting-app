@@ -1,7 +1,11 @@
 <?php 
 require_once('init.inc.php');
+
+
 if (!empty($_POST['chat_id'])) {
     $chat_id = $_POST["chat_id"];
+} else {
+    die();
 }
 
 

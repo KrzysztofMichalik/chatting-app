@@ -93,22 +93,13 @@ function getActiveChat() {
         </div>
         <?php  ?>
         <div class="mesgs">
-          <div class="msg_history">
-
-          </div> 
-          <?php
-            // w tym miejscu potrzebuje sprawdzić flagę z bramkidopobieraniawiadomosci.php
-             
-               echo '
-               <div class="type_msg">
-                  <div class="input_msg_write">
-                    <input type="text" class="write_msg" placeholder="Type a message" id="msg" />
-                    <button id="sendMsg"  class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                </div>
-              </div>
-               ';
-             
-          ?>
+          <div class="msg_history"></div> 
+          <div id="msg" style="display:none;" class="type_msg">
+            <div class="input_msg_write">
+              <input type="text" class="write_msg" placeholder="Type a message" id="msg" />
+              <button id="sendMsg"  class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+          </div>
+        </div>               
       </div>
     </div>
   </div>
