@@ -96,8 +96,10 @@ function getActiveChat() {
           <div class="msg_history"></div> 
           <div id="msg" style="display:none;" class="type_msg">
             <div class="input_msg_write">
-              <input type="text" class="write_msg" placeholder="Type a message" id="msg" />
-              <button id="sendMsg"  class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+              <input type="text" data-chatid="" class="write_msg" placeholder="Type a message" id="msgText" />
+              <button id="sendMsg" class="msg_send_btn" type="button">
+                <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+              </button>
           </div>
         </div>               
       </div>
@@ -162,3 +164,4 @@ function getActiveChat() {
 </div>
 
 
+<div id="error"></div>
