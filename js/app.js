@@ -1,20 +1,14 @@
 $( document ).ready(function() {
+    // refresh messanges
     var message = $('#msgText'); 
 
-    $('.trans-btn').click(function(event){
-        var id = $(this).data('chat-id');
-        $('#invChatID').val(id);        
-    });
-
-    var funca = function(event, id){
+    var funca = function(id, lastMsgId){
         $.ajax({            
             method: "POST",
-            url: "bramkadopobieraniawiadomosci.php",                        
-            data: { chat_id: id,
-                    reload: true
-            },
+            url: "bramkadoodswierzania.php",                        
+            data: { chat_id: id, lastMsgId: lastMsgId },
         }).done(function(r){            
-            console.log('refresh');
+            console.log('done?');
             $('.msg_history').html(r);
         }).fail(function(error){
             console.log(error);
@@ -34,29 +28,13 @@ $( document ).ready(function() {
                 url: "bramkadopobieraniawiadomosci.php",                        
                 data: { chat_id: id },
             }).done(function(r){            
-                console.log('refresh');
                 $('.msg_history').html(r);
             }).fail(function(error){
                 console.log(error);
             });
     }
- 
-    $('.convName').click(function(event){
-        $('#msg').css("display", "block");
-        var id = $(this).data('chat-id');
-        message.attr("data-chatid", id);
-        
-        getMessages(event, id);
-        
-        var lastMsg = $('#lastMsg').data('lastMsg');
-        console.log(lastMsg)
-        
-        reloadChat(event, id);
-                
-    });
 
-
-    $('#sendMsg').click(function(event){        
+    function sendMsg(){
         var msg = message.val();
         message.val("");
         var id = message.data('chatid');
@@ -72,26 +50,39 @@ $( document ).ready(function() {
           }).fail(function(error){
             console.log(error);
           });
+    }
+
+    if($("#lastMsg").length !== 0) {
+        console.log('eh');
+         var lastMsgId = $("#lastMsg").data("msg-id");
+         var chatId = $("#recived_msg").data("chatid");
+         reloadChat(chatId, lastMsgId);
+       } 
+ 
+     $('.trans-btn').click(function(event){
+         var id = $(this).data('chat-id');
+         $('#invChatID').val(id);        
+     });
+
+    $('.convName').click(function(event){
+        
+        $(".msg_history").load(" .msg_history > *");
+        $('#msg').css("display", "block");
+        var id = $(this).data('chat-id');
+        message.attr("data-chatid", id);        
+        getMessages(event, id);    
+    });
+
+    
+
+    $('#sendMsg').click(function(event){        
+        sendMsg();
     });
 
     message.keypress(function(event){
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if(keycode == '13'){
-            var msg = message.val();
-            message.val("");
-            var id = message.data('chatid');
-            $.ajax({            
-                method: "POST",
-                url: "bramkadowysylaniawiadomosci.php",                        
-                data: { chat_id: id,
-                        message: msg,
-                },
-            }).done(function(r){
-                $('#error').html(r);
-                console.log('wiadomsoc wyslana');
-              }).fail(function(error){
-                console.log(error);
-              });
+            sendMsg();
         }
         //Stop the event from propogation to other handlers
         //If this line will be removed, then keypress event handler attached 
