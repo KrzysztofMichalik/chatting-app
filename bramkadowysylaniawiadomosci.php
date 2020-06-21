@@ -5,11 +5,6 @@ if (!empty($_POST['chat_id']) || !empty($_POST['message']) ) {
 
     $result = $daoSendMsg->sendMsg($_POST['chat_id'], $_POST['message']);
     
-    // // var_dump($result);
-
-    // if(!is_array($result)){
-    //     var_dump($result);
-    // }
 
     
 } else {

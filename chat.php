@@ -1,5 +1,4 @@
 <?php
-var_dump($_POST);
 
 require_once('init.inc.php');
 require_once('inc/header.inc.php');
@@ -36,7 +35,6 @@ function getActiveChat() {
   $dao = new chatDAO("http://tank.iai-system.com/api/chat/getActive");
   $activConv = $dao->getActive();
   return $activConv;
-
 }
 
 
@@ -76,7 +74,7 @@ function getActiveChat() {
                   <button" class="trans-btn btn btn-success" data-chat-id="'.$value['id'].'" data-toggle="modal" data-target="#add_buddy">Add Buddy</button></div>                   
                   <form class="" action="chat.php" method="post">
                     <input type="hidden" name="chat_id" value="'. $value['id'] .'"/>
-                    <input class="btn btn-danger" type="submit" name="leave" value="Leave"/>
+                    <input class="btn btn-danger leaveChat" type="submit" name="leave" value="Leave"/>
                   </form>
                                    
                   </div>
@@ -93,6 +91,7 @@ function getActiveChat() {
         <?php  ?>
         <div class="mesgs">
           <div class="msg_history"></div> 
+          <div id="instuction">Choose room</div>
           <div id="msg" style="display:none;" class="type_msg">
             <div class="input_msg_write">
               <input type="text" data-chatid="" class="write_msg" placeholder="Type a message" id="msgText" />

@@ -1,34 +1,59 @@
-$( document ).ready(function() {
-    // refresh messanges
-    var message = $('#msgText'); 
+// You'll need a variable to store a reference to the timer
 
+
+
+
+$( document ).ready(function() {
+
+    var timer = null;
+    var xhr = null;
+
+    var message = $('#msgText'); 
+    
+    function stopInterval() {
+        // To cancel an interval, pass the timer to clearInterval()
+        clearInterval(timer);
+    }
     var funca = function(id, lastMsgId){
-        $.ajax({            
+        xhr = $.ajax({            
             method: "POST",
             url: "bramkadoodswierzania.php",                        
             data: { chat_id: id, lastMsgId: lastMsgId },
         }).done(function(r){            
-            console.log('done?');
             $('.msg_history').html(r);
+            console.log('yeah');
+            // append for solution with last id
+            // $('.msg_history').append(r);
         }).fail(function(error){
             console.log(error);
         });
 
     }
-    
+
     function reloadChat(event, id){
-        setInterval(function(){           
+       timer = setInterval(function(){           
             funca(event, id)
         }, 1000)
     }
 
-    function getMessages(event, id){
+    function clearChat(){
+        $('#msg_history').empty();
+        $('#instuction').css("display", "block");
+    }
+    
+    $('.leaveChat').click(clearChat());
+
+
+    function getMessages(id){
         $.ajax({            
                 method: "POST",
                 url: "bramkadopobieraniawiadomosci.php",                        
                 data: { chat_id: id },
             }).done(function(r){            
                 $('.msg_history').html(r);
+                var lastMsgId = $("#lastMsg").data("msg-id");
+                var chatId = $("#recived_msg").data("chatid");
+                reloadChat(chatId, lastMsgId);
             }).fail(function(error){
                 console.log(error);
             });
@@ -45,35 +70,30 @@ $( document ).ready(function() {
                     message: msg,
             },
         }).done(function(r){
-            $('#error').html(r);
-            console.log('wiadomsoc wyslana');
+            getMessages(id);   
           }).fail(function(error){
             console.log(error);
           });
     }
-
-    if($("#lastMsg").length !== 0) {
-        console.log('eh');
-         var lastMsgId = $("#lastMsg").data("msg-id");
-         var chatId = $("#recived_msg").data("chatid");
-         reloadChat(chatId, lastMsgId);
-       } 
  
      $('.trans-btn').click(function(event){
          var id = $(this).data('chat-id');
          $('#invChatID').val(id);        
      });
 
-    $('.convName').click(function(event){
+    $('.convName').click(function(event){     
         
+        if(xhr) {
+            xhr.abort();
+        }
+        stopInterval();
         $(".msg_history").load(" .msg_history > *");
         $('#msg').css("display", "block");
+        $('#instuction').css("display", "none");
         var id = $(this).data('chat-id');
         message.attr("data-chatid", id);        
-        getMessages(event, id);    
-    });
-
-    
+        getMessages(id);    
+    });    
 
     $('#sendMsg').click(function(event){        
         sendMsg();
@@ -84,9 +104,6 @@ $( document ).ready(function() {
         if(keycode == '13'){
             sendMsg();
         }
-        //Stop the event from propogation to other handlers
-        //If this line will be removed, then keypress event handler attached 
-        //at document level will also be triggered
         event.stopPropagation();
     });
 });
