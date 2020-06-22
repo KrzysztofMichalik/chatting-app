@@ -34,61 +34,91 @@ if(!empty($_POST['leave'])) {
 function getActiveChat() {
   $dao = new chatDAO("http://tank.iai-system.com/api/chat/getActive");
   $activConv = $dao->getActive();
-  return $activConv;
+  foreach ($activConv as $key => $value) {
+    echo '
+          <div class="chat_list">
+          <div class="chat_people">
+          <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+          <div class="chat_id">                  
+          <h5 class="convName" data-chat-id="'.$value['id'].'" >'. $value['name'] .'</h5>
+          <div class="d-flex justify-content-between">
+          <div>
+          <button" class="trans-btn btn btn-success" data-chat-id="'.$value['id'].'" data-toggle="modal" data-target="#add_buddy">Add Buddy</button></div>                   
+          <form class="" action="chat.php" method="post">
+            <input type="hidden" name="chat_id" value="'. $value['id'] .'"/>
+            <input class="btn btn-danger leaveChat" type="submit" name="leave" value="Leave"/>
+          </form>
+                            
+          </div>
+          </div>
+          </div>
+          </div>
+            ';
+           }
+}
+
+function getUsers(){
+  $dao = new userDAO("http://tank.iai-system.com/api/user/getAll");
+  $outputArray = $dao->getAll();
+  if(is_array($outputArray)){
+    print  '<div class="usersBoard col-md-4">
+    <table class="table mt-2">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Login</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>';
+            foreach ($outputArray as $key => $value) {
+              if (empty($value['icon'])) {
+                $src = "https://cdn.iconscout.com/icon/free/png-512/incognito-6-902117.png";
+              } else {
+                $src = $value['icon'];
+              }
+              print '<tr>'.
+              '<th scopre="row">' . $key .'</th>' .
+              '<td><img class="icon" src="'. $src .'"/>' . "\t". $value['login'] .'</td>'.
+              '<td>'. $value['status'] .'</td>'.
+              '</tr>';
+            }
+          
+        
+      '</tbody>
+     </table>
+  </div>';
+  }
+ 
 }
 
 
 ?>
 
 
-<div class="container">
-<div class="messaging mt-2">
-      <div class="inbox_msg">
-        <div class="inbox_people">
-          <div class="headind_srch">
-            <div class="recent_heading">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chat_name">
-                Create Chat
-              </button>
-            </div>
-            <!-- <div class="srch_bar">
-              <div class="stylish-input-group">
-                <input type="text" class="search-bar"  placeholder="Search" >
-                <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                </span> </div>
-            </div> -->
-          </div> 
-          <div class="inbox_chat">
-          <?php
-          $activConv = getActiveChat();
-          foreach ($activConv as $key => $value) {
-            echo '
-                  <div class="chat_list">
-                  <div class="chat_people">
-                  <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                  <div class="chat_id">                  
-                  <h5 class="convName" data-chat-id="'.$value['id'].'" >'. $value['name'] .'</h5>
-                  <div class="d-flex justify-content-between">
-                  <div>
-                  <button" class="trans-btn btn btn-success" data-chat-id="'.$value['id'].'" data-toggle="modal" data-target="#add_buddy">Add Buddy</button></div>                   
-                  <form class="" action="chat.php" method="post">
-                    <input type="hidden" name="chat_id" value="'. $value['id'] .'"/>
-                    <input class="btn btn-danger leaveChat" type="submit" name="leave" value="Leave"/>
-                  </form>
-                                   
-                  </div>
-                  </div>
-                  </div>
-                  </div>
-            ';
-          }
-           ?>
-         </div>
-          <div>
+<div class="container-fluid">
+  <div class="row">
+  <div class="messaging mt-2 col-md-8">
+    <div class="inbox_msg">
+      <div class="inbox_people">
+        <div class="headind_srch">
+          <div class="recent_heading">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chat_name">
+              Create Chat
+            </button>
           </div>
+          <!-- <div class="srch_bar">
+            <div class="stylish-input-group">
+              <input type="text" class="search-bar"  placeholder="Search" >
+              <span class="input-group-addon">
+              <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+              </span> </div>
+          </div> -->
+        </div> 
+        <div class="inbox_chat">
+         <?php $activConv = getActiveChat();?>
         </div>
-        <?php  ?>
+      </div>
         <div class="mesgs">
           <div class="msg_history"></div> 
           <div id="instuction">Choose room</div>
@@ -99,9 +129,13 @@ function getActiveChat() {
                 <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
               </button>
           </div>
-        </div>               
-      </div>
+        </div>
+      </div>            
     </div>
+    </div>
+        <?php getUsers();?>
+        
+      </div>   
   </div>
 <!-- MODALS -->
 <!-- Conv name -->
@@ -162,4 +196,3 @@ function getActiveChat() {
 </div>
 
 
-<div id="error"></div>

@@ -33,12 +33,6 @@ if(!empty($_SESSION['name'])){
         <a class="nav-link" href="./registerUser.php">Register</a>
       </li>
     <?php endif; ?>
-      <?php if ($html['isLogged'] == true ): ?>
-        <!-- edit user link -->
-      <li class="nav-item active">
-        <a class="nav-link" href="./usersBoard.php">Users Board</a>
-      </li>
-    <?php endif; ?>
     <?php if ($html['isLogged'] == true): ?>
       <li class="nav-item active">
         <a class="nav-link" href="./chat.php">Chats</a>

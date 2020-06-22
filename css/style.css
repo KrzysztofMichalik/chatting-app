@@ -161,7 +161,7 @@ img{ max-width:100%;}
   position: relative;
   position: absolute;
   width: 500px;
-  bottom: 27%;
+  bottom: 8%;
 }
 .msg_send_btn {
   background: #05728f none repeat scroll 0 0;
@@ -180,6 +180,11 @@ img{ max-width:100%;}
 .messaging { padding: 0 0 50px 0;}
 .msg_history {
   height: 516px;
+  overflow-y: auto;
+}
+.usersBoard {
+  height: 615px;
+  padding-left: 0;
   overflow-y: auto;
 }
 .sm-font{
